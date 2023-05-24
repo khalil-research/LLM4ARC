@@ -12,6 +12,7 @@ The exact mapping of the 1D-ARC filenames can be found [here](https://github.com
 
 ## Visualization
 For a visualization of GPT-4 solutions, visit [our visualizations page](https://xuwil.github.io/GPT-ARC-Visuals/).
+![Visualization Screenshot](https://drive.google.com/uc?export=view&id=1JFQ8lksQv03zWKuEv5HefqWycQO5UYK6)
 
 ## Dataset
 The "1D-ARC" dataset used in our experiments is available at this [GitHub repository](https://github.com/khalil-research/1D-ARC).
