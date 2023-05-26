@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPT&ARC Visuals</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-jsonview/1.2.3/jquery.jsonview.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+        }
+        img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        img:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        #content {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #content .content-image {
+            max-width: 100%;
+            width: 700px;
+            height: auto;
+            cursor: default;
+            pointer-events: none;
+            border: none;
+            box-shadow: none;
+            outline: none;
+        }
+        #navigation {
+            display: none;
+            text-align: center;
+            margin: 20px;
+        }
+        #navigation button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #file-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 20px;
+        }
+        #file-list h1 {
+            width: 100%;
+            text-align: center;
+            font-size: 32px;
+        }
+        #title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #title h1 {
+            font-size: 36px;
+        }
+        #authors {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #authors a {
+            color: #1367a7;
+            text-decoration: none;
+        }
+        #authors a:hover {
+            color: #208799;
+            text-decoration: underline;
+        }
+        #links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #links a {
+            margin: 5px;
+            padding: 10px;
+            font-size: 24px;
+            color: #1367a7;
+            text-decoration: none;
+        }
+        #links a:hover {
+            color: #208799;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- New title and buttons -->
+    <div id="title">
+        <h1>LLMs and the Abstraction and Reasoning Corpus: <br> Successes, Failures, and the Importance of Object-based Representations</h1>
+    </div>
+    <div id="authors">
+        <p><a href="https://xuwil.github.io/">Yudong (Will) Xu</a>, <a href="https://www.linkedin.com/in/wenhao-chris-li-80994454/">Wenhao Li</a>, <a href="https://www.cs.toronto.edu/~pashootan/">Pashootan Vaezipoor</a>, <a href="https://d3m.mie.utoronto.ca/members/ssanner/">Scott Sanner</a>, <a href="https://ekhalil.com/">Elias B. Khalil</a></p> <!-- Replace with actual author names -->
+    </div>
+    <div id="links">
+        <a href="#">[Paper]</a>
+        <a href="https://github.com/khalil-research/LLM4ARC">[Complete Logs]</a>
+        <a href="https://github.com/khalil-research/1D-ARC">[1D-ARC Dataset]</a>
+    </div>
+    <div id="file-list">
+        <h1>GPT-4 Solution Visualizations</h1>
+    </div>
+    <div id="navigation">
+        <button id="previous">Previous</button>
+        <button id="next">Next</button>
+        <button id="back">Back</button>
+    </div>
+    <div id="content"></div>
+
+
+    <script>
+        var converter = new showdown.Converter();
+        var fileList = [
+            'Task_05f2a901.md', 'Task_25ff71a9.md', 'Task_3906de3d.md', 'Task_3aa6fb7a.md',
+            'Task_3c9b0459.md', 'Task_4258a5f9.md', 'Task_4347f46a.md', 'Task_50cb2852.md',
+            'Task_54d82841.md', 'Task_6150a2bd.md', 'Task_67385a82.md', 'Task_67a3c6ac.md',
+            'Task_6855a6e4.md', 'Task_694f12f3.md', 'Task_6c434453.md',
+            'Task_6d75e8bb.md', 'Task_6e82a1ae.md', 'Task_74dd1130.md', 'Task_7f4411dc.md',
+            'Task_810b9b61.md', 'Task_88a10436.md', 'Task_913fb3ed.md', 'Task_9565186b.md',
+            'Task_9dfd6313.md', 'Task_a5313dff.md', 'Task_a699fb00.md', 'Task_a79310a0.md',
+            'Task_aabf363d.md', 'Task_ae3edfdc.md', 'Task_aedd82e4.md', 'Task_b1948b0a.md',
+            'Task_b27ca6d3.md', 'Task_b2862040.md', 'Task_bb43febb.md', 'Task_c0f76784.md',
+            'Task_c8f0f002.md', 'Task_ce22a75a.md', 'Task_d037b0a7.md', 'Task_d2abd087.md',
+            'Task_d43fd935.md', 'Task_d5d6de2d.md', 'Task_dc1df850.md', 'Task_dc433765.md',
+            'Task_ddf7fa4f.md', 'Task_ded97339.md', 'Task_e9614598.md', 'Task_ea32f347.md',
+            'Task_ed36ccf7.md', 'Task_f8a8fe49.md', 'Task_f76d97a5.md'
+        ];
+
+
+        fileList.forEach(function(filename) {
+            var imgName = filename.split('.md')[0] + '.jpg'; // Assuming jpg images. Adjust as per actual image type
+            $('#file-list').append('<img src="./images/thumbnails/' + imgName + '" data-mdfile="' + filename + '">');
+        });
+
+        $('#file-list img').click(function() {
+            var filename = $(this).attr('data-mdfile');
+            $('#file-list').hide();
+            $('#navigation').show();
+            loadMarkdown(filename);
+        });
+
+        function loadMarkdown(filename) {
+            $.ajax({
+                url: './md_files/' + filename,
+                dataType: 'text',
+                success: function(data) {
+                    var html = converter.makeHtml(data);
+                    var $html = $(html);
+                    $html.find('img').addClass('content-image');
+                    $('#content').html($html);
+                    $('#content').attr('data-currentfile', filename);
+                    // Prettify JSON
+                    try {
+                        var jsonStr = $('#content').text();
+                        var jsonObj = JSON.parse(jsonStr);
+                        $('#content').jsonView(jsonObj);
+                    } catch(e) {}
+                }
+            });
+        }
+
+        $('#previous').click(function() {
+            var currentFile = $('#content').attr('data-currentfile');
+            var index = fileList.indexOf(currentFile);
+            if (index > 0) {
+                loadMarkdown(fileList[index - 1]);
+            }
+        });
+
+        $('#next').click(function() {
+            var currentFile = $('#content').attr('data-currentfile');
+            var index = fileList.indexOf(currentFile);
+            if (index < fileList.length - 1) {
+                loadMarkdown(fileList[index + 1]);
+            }
+        });
+
+        $('#back').click(function() {
+            $('#file-list').show();
+            $('#navigation').hide();
+            $('#content').empty();
+        });
+
+        $('#file-list img').click(function() {
+            var filename = $(this).attr('data-mdfile');
+            $('#file-list').hide();
+            $('#navigation').show();
+            $('#title').hide();
+            $('#authors').hide();
+            $('#links').hide();
+            loadMarkdown(filename);
+        });
+
+        $('#back').click(function() {
+            $('#file-list').show();
+            $('#navigation').hide();
+            $('#content').empty();
+            $('#title').show();
+            $('#authors').show();
+            $('#links').show();
+        });
+    </script>
+    </script>
+</body>
+</html>
