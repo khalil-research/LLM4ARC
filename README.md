@@ -1,4 +1,4 @@
-# LLM-and-ARC
+# LLMs-and-ARC
 This repository hosts experimental results as described in the paper: **LLMs and the Abstraction and Reasoning Corpus: Successes, Failures, and the Importance of Object-based Representations.**
 
 ## Structure
@@ -11,7 +11,7 @@ The exact mapping of the 1D-ARC filenames can be found [here](https://github.com
 **Note:** If a results file ends with 3.5 or 4, it contains the result for GPT-3.5 or GPT-4, respectively. If it does not have such an ending, it contains results for both models.
 
 ## Visualization
-For a visualization of GPT-4 solutions, visit [our visualizations page](https://xuwil.github.io/GPT-ARC-Visuals/).
+For a visualization of GPT-4 solutions, visit [our visualizations page](https://khalil-research.github.io/LLM4ARC).
 ![Visualization Screenshot](https://drive.google.com/uc?export=view&id=1JFQ8lksQv03zWKuEv5HefqWycQO5UYK6)
 
 ## Dataset
