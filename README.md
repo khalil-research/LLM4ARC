@@ -1,5 +1,5 @@
 # LLMs-and-ARC
-This repository hosts experimental results as described in the paper: [**LLMs and the Abstraction and Reasoning Corpus: Successes, Failures, and the Importance of Object-based Representations.**](https://khalil-research.github.io/LLM4ARC/paper.pdf)
+This repository hosts experimental results as described in the paper: [**LLMs and the Abstraction and Reasoning Corpus: Successes, Failures, and the Importance of Object-based Representations.**](https://arxiv.org/abs/2305.18354)
 
 ## Structure
 The `output-logs` directory includes two subdirectories, `direct-grid` and `object-based`, each representing different approaches in our experiment. Both contain:
